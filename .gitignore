@@ -1,0 +1,4 @@
+setup.sql
+.env
+composer.lock
+/vendor

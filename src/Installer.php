@@ -4,8 +4,8 @@ namespace Installer;
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Installer\Interfaces\InstallerInterface;
+use Installer\Interfaces\OperationInterface as Operation;
 
 
 /**
@@ -13,9 +13,26 @@ use Installer\Interfaces\InstallerInterface;
  */
 class Installer implements InstallerInterface
 {
+	/**
+	* Database manager.
+	*
+	* @var Illuminate\Database\Capsule\Manager
+	*/
 	protected $manager;
 
+	/**
+	* Database Schema
+	*
+	* @var Illuminate\Database\Schema\Builder
+	*/
 	protected $schema;
+
+	/**
+	* All the operations to be run.
+	*
+	* @var array
+	*/
+	protected $operations;
 
     /**
      * Construct
@@ -26,17 +43,6 @@ class Installer implements InstallerInterface
 		$this->schema = $manager->getConnection()->getSchemaBuilder();
     }
 
-    /**
-    * Creates database table.  
-    *
-    * @param Table $table 
-    *
-    * @return boolean
-    */
-    public function create()
-    {
-    	dd($this->manager);
-    }
 
     /**
     * Runs the installer. 
@@ -45,32 +51,14 @@ class Installer implements InstallerInterface
     */
     public function run()
     {
-		// $this->schema->create('categories', function(Blueprint $table) {
-
-		// 	$table->increments('id');
-		// 	$table->string('name')->unique();
-		// 	$table->string('title');
-		// 	$table->text('contents');
-		// 	$table->integer('flagship')->default(0);
-
-		// 	$table->dateTime('created');
-		// 	$table->integer('createdby'); // TODO: change this name.
-
-		// 	$table->dateTime('modified');
-		// 	$table->integer('modifiedby');
-
-		// 	$table->smallInteger('enabled')->default(1);
-
-		// 	$table->string('import_id', 40);
-			
-
-		// 	// It should have something simpler.
-		// 	// $table->timestamps();
-
-		// 	// ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2
-
-		// });
-
+    	foreach ($this->operations as $operation) {
+    		try {
+    			$operation->run();
+    		} catch (OperationException $e) {
+    			// $e->getMessage();
+    			return false;
+    		} 	
+    	}
 
 		// All good.
     	return true;
@@ -84,9 +72,8 @@ class Installer implements InstallerInterface
     * @return type
     */
     public function register(Operation $operation)
-    // public function register()
     {
-    	
+    	$this->operations[] = $operation;
     }
 
     /**
@@ -127,6 +114,30 @@ class Installer implements InstallerInterface
     {
     	// TODO: $schema type-hinting 
         $this->schema = $schema;
+
+        return $this;
+    }
+
+    /**
+     * Gets the All the operations to be run.
+     *
+     * @return array
+     */
+    public function getOperations()
+    {
+        return $this->operations;
+    }
+
+    /**
+     * Sets the All the operations to be run.
+     *
+     * @param array $operations the operations
+     *
+     * @return self
+     */
+    protected function setOperations(array $operations)
+    {
+        $this->operations = $operations;
 
         return $this;
     }

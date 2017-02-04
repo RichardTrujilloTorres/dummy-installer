@@ -2,6 +2,7 @@
 
 namespace Installer;
 
+use Installer\Exceptions\OperationException;
 use Installer\Interfaces\OperationInterface;
 
 
@@ -10,8 +11,25 @@ use Installer\Interfaces\OperationInterface;
  */
 class Operation implements OperationInterface
 {
+	/**
+	* Reference name.
+	*
+	* @var string
+	*/
 	protected $name;
+
+	/**
+	* The task to be performed.
+	*
+	* @var callable
+	*/
 	protected $task;
+
+	/**
+	* The reverse/undo task to be performed.
+	*
+	* @var callable
+	*/
 	protected $reverse;
 
 	/**
@@ -20,6 +38,7 @@ class Operation implements OperationInterface
 	* @var integer
 	*/
 	protected $status;
+
 
     /**
      * Constructor
@@ -49,8 +68,7 @@ class Operation implements OperationInterface
     */
     public function run($force = false)
     {
-    	// call_user_func($this->task)
-    	// $this->task
+    	return call_user_func($this->task);
     }
 
     /**
@@ -104,7 +122,7 @@ class Operation implements OperationInterface
     /**
      * Gets the value of task.
      *
-     * @return mixed
+     * @return callable
      */
     public function getTask()
     {

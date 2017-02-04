@@ -6,7 +6,8 @@
     },
     "autoload": {
     	"psr-4": {
-    		"Installer\\": "src/"
+    		"Installer\\": "src/",
+            "Database\\": "database/"
     	}
     }
 }

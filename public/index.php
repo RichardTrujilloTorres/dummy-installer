@@ -1,6 +1,7 @@
 <?php
 
 use Database\CreateCategoriesTable;
+use Database\CreateContentsTable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -28,16 +29,21 @@ $schema = $capsule->getConnection()->getSchemaBuilder();
 // ];
 
 // try 
+// TODO: move definitions to a config file
 $create = new Operation(
 	'create_categories_table', 
 	new CreateCategoriesTable($schema));
+$contents = new Operation(
+	'create_contents_table', 
+	new CreateContentsTable($schema));
 
 // TODO: add CreateCategoriesTable::class support
 
 
 // dd($operation);
 
-$installer->register($create);
+// $installer->register($create);
+$installer->register($contents);
 // $installer->register($operation);
 // dd($installer->getOperations());
 

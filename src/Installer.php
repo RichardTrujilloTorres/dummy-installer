@@ -6,6 +6,7 @@ use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
 use Installer\Interfaces\InstallerInterface;
 use Installer\Interfaces\OperationInterface as Operation;
+use PDOException;
 
 
 /**
@@ -57,7 +58,13 @@ class Installer implements InstallerInterface
     		} catch (OperationException $e) {
     			// $e->getMessage();
     			return false;
-    		} 	
+    		}
+    		// table already exist exception
+    		// } catch (PDOException $e) {
+    		// 	// handle msg
+    		// 	return false;
+    		// } 
+    		
     	}
 
 		// All good.

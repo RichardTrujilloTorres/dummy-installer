@@ -1,0 +1,12 @@
+{
+    "require": {
+        "illuminate/database": "^5.4",
+        "symfony/yaml": "^3.2",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"Installer\\": "src/"
+    	}
+    }
+}

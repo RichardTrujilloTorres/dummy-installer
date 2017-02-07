@@ -4,8 +4,6 @@ namespace Database;
 
 use Illuminate\Database\Schema\Blueprint;
 
-
-
 /**
  * Represents a table Operation.
  */
@@ -19,7 +17,7 @@ abstract class TableOperation
     protected $schema;
 
     /**
-    * Constructor. 
+    * Constructor.
     *
     * @param Illuminate\Database\Schema\Builder $schema
     *

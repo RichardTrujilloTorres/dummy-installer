@@ -4,14 +4,13 @@ namespace Installer\Interfaces;
 
 use Illuminate\Database\Capsule\Manager;
 
+interface InstallerInterface
+{
 
-interface InstallerInterface {
-
-	/**
-    * Runs the installer. 
+    /**
+    * Runs the installer.
     *
     * @return boolean
     */
-	public function run();
-	
+    public function run();
 }

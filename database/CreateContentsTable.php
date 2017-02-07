@@ -4,22 +4,21 @@ namespace Database;
 
 use Illuminate\Database\Schema\Blueprint;
 
-
-
 /**
  * Creates `contents` table.
  */
 class CreateContentsTable extends TableOperation
 {
     /**
-    * Object callable. 
+    * Object callable.
     *
     * @return boolean
     */
     public function __invoke()
     {
-    	$this->schema->create('contents', function(Blueprint $table) {
-
+        $this->schema->create('contents', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
 
             $table->string('type', 15);
@@ -31,7 +30,7 @@ class CreateContentsTable extends TableOperation
             $table->double('lng')->default(0);
 
 
-            // SQLSTATE[42000]: Syntax error or access violation: 1067 Invalid default value for 'license' 
+            // SQLSTATE[42000]: Syntax error or access violation: 1067 Invalid default value for 'license'
             // --for both: '1' and 1 as default
             // $table->integer('license', 11)->default(1);
 
@@ -84,6 +83,6 @@ class CreateContentsTable extends TableOperation
 
 
 
-    	return true;
+        return true;
     }
 }

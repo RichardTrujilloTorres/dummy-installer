@@ -5,39 +5,38 @@ namespace Installer;
 use Installer\Exceptions\OperationException;
 use Installer\Interfaces\OperationInterface;
 
-
 /**
- * Represents an operation to be perform on installation time. 
+ * Represents an operation to be perform on installation time.
  */
 class Operation implements OperationInterface
 {
-	/**
-	* Reference name.
-	*
-	* @var string
-	*/
-	protected $name;
+    /**
+    * Reference name.
+    *
+    * @var string
+    */
+    protected $name;
 
-	/**
-	* The task to be performed.
-	*
-	* @var callable
-	*/
-	protected $task;
+    /**
+    * The task to be performed.
+    *
+    * @var callable
+    */
+    protected $task;
 
-	/**
-	* The reverse/undo task to be performed.
-	*
-	* @var callable
-	*/
-	protected $reverse;
+    /**
+    * The reverse/undo task to be performed.
+    *
+    * @var callable
+    */
+    protected $reverse;
 
-	/**
-	* The operation status (complete/incomplete/in-hold)
-	*
-	* @var integer
-	*/
-	protected $status;
+    /**
+    * The operation status (complete/incomplete/in-hold)
+    *
+    * @var integer
+    */
+    protected $status;
 
 
     /**
@@ -45,31 +44,45 @@ class Operation implements OperationInterface
      */
     public function __construct($name, $task, $reverse = null)
     {
-    	if (! is_callable($task)) {
-    		throw new OperationException('The task must be a callable.');
-    	}
+        if (! is_callable($task)) {
+            throw new OperationException('The task must be a callable.');
+        }
 
-    	if (! is_null($reverse) && ! is_callable($reverse)) {
-    		throw new OperationException('The reverse task must be a callable.');
-    	}
+        if (! is_null($reverse) && ! is_callable($reverse)) {
+            throw new OperationException('The reverse task must be a callable.');
+        }
 
 
-		$this->name = $name;
-		$this->task = $task;
-		$this->reverse = $reverse;
+        $this->name = $name;
+        $this->task = $task;
+        $this->reverse = $reverse;
     }
 
     /**
-    * Runs the operation. 
+    * Runs the operation.
     *
-    * @param boolean $force Attempt to force the operation. 
+    * @param boolean $force Attempt to force the operation.
     *
     * @return boolean
     */
     public function run($force = false)
     {
-    	return call_user_func($this->task);
+        return call_user_func($this->task);
     }
+
+    /**
+    * Runs the operation.
+    *
+    * @param boolean $force Attempt to force the operation.
+    *
+    * @return boolean
+    */
+    public function reverse($force = false)
+    {
+        return call_user_func($this->reverse);
+    }
+
+
 
     /**
      * Gets the The operation status (complete/incomplete/in-hold).

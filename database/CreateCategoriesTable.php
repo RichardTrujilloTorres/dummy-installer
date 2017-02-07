@@ -4,22 +4,21 @@ namespace Database;
 
 use Illuminate\Database\Schema\Blueprint;
 
-
-
 /**
  * Creates `categories` table.
  */
 class CreateCategoriesTable extends TableOperation
 {
     /**
-    * Object callable. 
+    * Object callable.
     *
     * @return boolean
     */
     public function __invoke()
     {
-    	$this->schema->create('categories', function(Blueprint $table) {
-
+        $this->schema->create('categories', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('title');
@@ -41,9 +40,8 @@ class CreateCategoriesTable extends TableOperation
             // $table->timestamps();
 
             // ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2
-
         });
 
-    	return true;
+        return true;
     }
 }

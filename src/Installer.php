@@ -8,96 +8,108 @@ use Installer\Interfaces\InstallerInterface;
 use Installer\Interfaces\OperationInterface as Operation;
 use PDOException;
 
-
 /**
  * Installer
  */
 class Installer implements InstallerInterface
 {
-	/**
-	* Database manager.
-	*
-	* @var Illuminate\Database\Capsule\Manager
-	*/
-	protected $manager;
+    /**
+    * Database manager.
+    *
+    * @var Illuminate\Database\Capsule\Manager
+    */
+    protected $manager;
 
-	/**
-	* Database Schema
-	*
-	* @var Illuminate\Database\Schema\Builder
-	*/
-	protected $schema;
+    /**
+    * Database Schema
+    *
+    * @var Illuminate\Database\Schema\Builder
+    */
+    protected $schema;
 
-	/**
-	* All the operations to be run.
-	*
-	* @var array
-	*/
-	protected $operations;
+    /**
+    * All the operations to be run.
+    *
+    * @var array
+    */
+    protected $operations;
 
     /**
      * Construct
      */
     public function __construct(Manager $manager)
-    {   
-		$this->manager = $manager;
-		$this->schema = $manager->getConnection()->getSchemaBuilder();
+    {
+        $this->manager = $manager;
+        $this->schema = $manager->getConnection()->getSchemaBuilder();
     }
 
 
     /**
-    * Runs the installer. 
+    * Runs the installer.
     *
     * @return boolean
     */
     public function run()
     {
-    	foreach ($this->operations as $operation) {
-    		try {
-    			$operation->run();
-    		} catch (OperationException $e) {
-    			// $e->getMessage();
-    			return false;
-    		}
-    		// table already exist exception
-    		// } catch (PDOException $e) {
-    		// 	// handle msg
-    		// 	return false;
-    		// } 
-    		
-    	}
+        foreach ($this->operations as $operation) {
+            try {
+                $operation->run();
+            } catch (OperationException $e) {
+                // $e->getMessage();
+                return false;
+            }
+            // table already exist exception
+            // } catch (PDOException $e) {
+            // 	// handle msg
+            // 	return false;
+            // }
+        }
 
-		// All good.
-    	return true;
+        // All good.
+        return true;
     }
 
     /**
-    * Register an operation to be perform on installation time. 
+    * Register an operation to be perform on installation time.
     *
-    * @param Operation $operation 
+    * @param Operation $operation
     *
     * @return type
     */
     public function register(Operation $operation)
     {
-    	$this->operations[] = $operation;
+        $this->operations[] = $operation;
     }
 
     /**
-    * Reverses all installation procedures. 
+    * Reverses all installation procedures.
     *
-    * @param boolean $force 
+    * @param boolean $force
     *
     * @return boolean
     */
     protected function reverse($force = false)
     {
-    	$this->schema->dropIfExists('categories');
+
+        // $this->schema->dropIfExists('categories');
+
+        foreach ($this->operations as $operation) {
+            try {
+                $operation->reverse();
+            } catch (OperationException $e) {
+                // $e->getMessage();
+                return false;
+            }
+        }
     }
 
+    /**
+    * Clean-up operations. 
+    *
+    * @return boolean
+    */
     protected function clean()
     {
-    	
     }
 
     /**
@@ -119,7 +131,7 @@ class Installer implements InstallerInterface
      */
     protected function setSchema($schema)
     {
-    	// TODO: $schema type-hinting 
+        // TODO: $schema type-hinting
         $this->schema = $schema;
 
         return $this;

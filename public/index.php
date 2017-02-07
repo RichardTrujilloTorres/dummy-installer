@@ -5,6 +5,9 @@ use Database\CreateContentMediaTable;
 use Database\CreateContentMetaTable;
 use Database\CreateContentsTable;
 use Database\CreateLicensesTable;
+use Database\CreateMenusTable;
+use Database\CreateModulesTable;
+use Database\CreatePagesTable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +50,15 @@ $content_meta = new Operation(
 $licenses = new Operation(
     'create_licenses_table',
     new CreateLicensesTable($schema));
+$menus = new Operation(
+    'create_menus_table',
+    new CreateMenusTable($schema));
+$modules = new Operation(
+    'create_modules_table',
+    new CreateModulesTable($schema));
+$pages = new Operation(
+    'create_pages_table',
+    new CreatePagesTable($schema));
 
 // TODO: add CreateCategoriesTable::class support
 
@@ -59,11 +71,19 @@ $licenses = new Operation(
 // dd($installer->getOperations());
 // $installer->register($content_media);
 // $installer->register($content_meta);
-$installer->register($licenses);
+$installer->register($pages);
 
 $result = $installer->run();
 
 dd($result);
+
+// preferences
+// templates
+// users
+// user_groups
+// widgets
+
+
 
 
 

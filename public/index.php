@@ -8,6 +8,9 @@ use Database\CreateLicensesTable;
 use Database\CreateMenusTable;
 use Database\CreateModulesTable;
 use Database\CreatePagesTable;
+use Database\CreatePreferencesTable;
+use Database\CreateTemplatesTable;
+use Database\CreateUsersTable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -59,6 +62,15 @@ $modules = new Operation(
 $pages = new Operation(
     'create_pages_table',
     new CreatePagesTable($schema));
+$preferences = new Operation(
+    'create_preferences_table',
+    new CreatePreferencesTable($schema));
+$templates = new Operation(
+    'create_templates_table',
+    new CreateTemplatesTable($schema));
+$users = new Operation(
+    'create_users_table',
+    new CreateUsersTable($schema));
 
 // TODO: add CreateCategoriesTable::class support
 
@@ -71,14 +83,17 @@ $pages = new Operation(
 // dd($installer->getOperations());
 // $installer->register($content_media);
 // $installer->register($content_meta);
-$installer->register($pages);
+// $installer->register($pages);
+// $installer->register($preferences);
+// $installer->register($templates);
+$installer->register($users);
 
 $result = $installer->run();
 
 dd($result);
 
-// preferences
-// templates
+
+
 // users
 // user_groups
 // widgets

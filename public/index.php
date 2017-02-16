@@ -10,7 +10,9 @@ use Database\CreateModulesTable;
 use Database\CreatePagesTable;
 use Database\CreatePreferencesTable;
 use Database\CreateTemplatesTable;
+use Database\CreateUserGroupsTable;
 use Database\CreateUsersTable;
+use Database\CreateWidgetsTable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -71,6 +73,12 @@ $templates = new Operation(
 $users = new Operation(
     'create_users_table',
     new CreateUsersTable($schema));
+$user_groups = new Operation(
+    'create_user_groups_table',
+    new CreateUserGroupsTable($schema));
+$widgets = new Operation(
+    'create_widgets_table',
+    new CreateWidgetsTable($schema));
 
 // TODO: add CreateCategoriesTable::class support
 
@@ -86,7 +94,9 @@ $users = new Operation(
 // $installer->register($pages);
 // $installer->register($preferences);
 // $installer->register($templates);
-$installer->register($users);
+// $installer->register($users);
+// $installer->register($user_groups);
+$installer->register($widgets);
 
 $result = $installer->run();
 
@@ -94,8 +104,6 @@ dd($result);
 
 
 
-// users
-// user_groups
 // widgets
 
 

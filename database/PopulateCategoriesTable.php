@@ -16,10 +16,7 @@ class PopulateCategoriesTable extends TableOperation
     */
     public function __invoke()
     {
-        // $this->schema->create('contents', function(Blueprint $table) {
-
-            
-     //    });
+        //
 
 
         return true;

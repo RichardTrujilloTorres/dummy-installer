@@ -5,8 +5,13 @@ namespace Installer;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
 use Installer\Interfaces\InstallerInterface;
-use Installer\Interfaces\OperationInterface as Operation;
+// use Installer\Interfaces\OperationInterface as Operation;
+use Installer\Operation;
 use PDOException;
+use ReflectionClass;
+use ReflectionMethod;
+use Symfony\Component\Translation\Exception\InvalidArgumentException;
+
 
 /**
  * Installer
@@ -34,13 +39,31 @@ class Installer implements InstallerInterface
     */
     protected $operations;
 
+
+    /**
+    * Specifies booting from file.
+    *
+    * @var boolean
+    */
+    protected $bootFromFile;
+
     /**
      * Construct
      */
-    public function __construct(Manager $manager)
+    public function __construct(Manager $manager, $bootFromFile = false, $bootFile = null)
     {
         $this->manager = $manager;
         $this->schema = $manager->getConnection()->getSchemaBuilder();
+        $this->bootFromFile = $bootFromFile;
+
+        // generate operations from file, if specified so
+        if (isset($this->bootFromFile) && $this->bootFromFile === true) {
+            if (! isset($bootFile) || $bootFile === null) {
+                throw new InvalidArgumentException("No boot file specified.");
+            }
+
+            $this->bootFromFile($bootFile);
+        }
     }
 
 
@@ -51,6 +74,9 @@ class Installer implements InstallerInterface
     */
     public function run()
     {
+        
+
+        // run each operation
         foreach ($this->operations as $operation) {
             try {
                 $operation->run();
@@ -159,5 +185,31 @@ class Installer implements InstallerInterface
         $this->operations = $operations;
 
         return $this;
+    }
+
+    /**
+    * Boot operations from file. 
+    *
+    * @param string $filename 
+    *
+    * @return null
+    * @throws \InvalidArgumentException
+    */
+    public function bootFromFile($filename)
+    {
+        $definitions = require $filename;
+
+        // expected namespace: \Installer\Database
+        // TODO: allow for namespace resolution or define a default one
+
+        foreach ($definitions as $name => $class) {
+            $method = new ReflectionMethod($class, '__construct');
+            $object = new ReflectionClass($class);
+            $operation = new Operation($name, $object->newInstanceArgs([$this->schema]));
+
+            // $this->operations[] = $object->newInstanceArgs([$this->schema]); 
+
+            $this->register($operation);
+         } 
     }
 }

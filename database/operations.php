@@ -39,6 +39,8 @@ return [
 	// 'populate_menus_table' => PopulateMenusTable::class,
 	// 'populate_modules_table' => PopulateModulesTable::class,
 	// 'populate_pages_table' => PopulatePagesTable::class,
-	'populate_preferences_table' => PopulatePreferencesTable::class,
+	// 'populate_preferences_table' => PopulatePreferencesTable::class,
+	// 'populate_templates_table' => PopulateTemplatesTable::class,
+	'populate_users_table' => PopulateUsersTable::class,
 
 ];

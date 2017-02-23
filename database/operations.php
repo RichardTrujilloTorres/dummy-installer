@@ -37,6 +37,8 @@ return [
 	// 'populate_contents_table' => PopulateContentsTable::class,
 	// 'populate_licenses_table' => PopulateLicensesTable::class,
 	// 'populate_menus_table' => PopulateMenusTable::class,
-	'populate_modules_table' => PopulateModulesTable::class,
+	// 'populate_modules_table' => PopulateModulesTable::class,
+	// 'populate_pages_table' => PopulatePagesTable::class,
+	'populate_preferences_table' => PopulatePreferencesTable::class,
 
 ];

@@ -24,7 +24,10 @@ class CreatePagesTable extends TableOperation
             $table->string('name', 55)->unique();
             $table->string('title', 55);
             $table->string('type', 25); // CHARACTER SET ucs2 COLLATE ucs2_unicode_ci
-            $table->string('url', 25);
+
+             // Uncaught PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'url' at row 1            
+            // $table->string('url', 25); 
+            $table->string('url');
 
             $table->tinyInteger('blank')->default(0);
 

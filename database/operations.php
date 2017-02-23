@@ -41,6 +41,8 @@ return [
 	// 'populate_pages_table' => PopulatePagesTable::class,
 	// 'populate_preferences_table' => PopulatePreferencesTable::class,
 	// 'populate_templates_table' => PopulateTemplatesTable::class,
-	'populate_users_table' => PopulateUsersTable::class,
+	// 'populate_users_table' => PopulateUsersTable::class,
+	// 'populate_user_groups_table' => PopulateUserGroupsTable::class,
+	'populate_widgets_table' => PopulateWidgetsTable::class,
 
 ];

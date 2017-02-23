@@ -23,16 +23,6 @@ $installer = new Installer($capsule, true, __DIR__.'/../database/operations.php'
 
 $result = $installer->run();
 
-// dd($result);
+dd($result);
 
 
-
-
-
-
-
-
-
-
-$category = new Category;
-dd($category->all());

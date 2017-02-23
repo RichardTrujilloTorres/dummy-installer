@@ -16,7 +16,7 @@ return [
 	* Tables creation.
 	*/
 	// 'create_categories_table' => CreateCategoriesTable::class,
-	'create_contents_table' => CreateContentsTable::class,
+	// 'create_contents_table' => CreateContentsTable::class,
 	// 'create_content_media_table' => CreateContentMediaTable::class,
 	// 'create_content_meta_table' => CreateContentMetaTable::class,
 	// 'create_licenses_table' => CreateLicensesTable::class,
@@ -34,6 +34,9 @@ return [
 	*/
 
 	// 'populate_categories_table' => PopulateCategoriesTable::class,
-	'populate_contents_table' => PopulateContentsTable::class,
+	// 'populate_contents_table' => PopulateContentsTable::class,
+	// 'populate_licenses_table' => PopulateLicensesTable::class,
+	// 'populate_menus_table' => PopulateMenusTable::class,
+	'populate_modules_table' => PopulateModulesTable::class,
 
 ];

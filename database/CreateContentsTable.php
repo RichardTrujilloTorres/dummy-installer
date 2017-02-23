@@ -55,6 +55,8 @@ class CreateContentsTable extends TableOperation
 
             // $table->integer('hits', 11);
 
+            
+            $table->datetime('created');
             $table->integer('createdby');
 
             $table->datetime('modified');
@@ -65,7 +67,7 @@ class CreateContentsTable extends TableOperation
             // Same error here for any default value and length.
             // $table->tinyInteger('translation', 1)->default(0);
             $table->tinyInteger('translation');
-            $table->tinyInteger('enabled');
+            $table->tinyInteger('enabled')->default(1);
             $table->string('language', 5)->default('it');
 
             // $table->integer('parent')->nullable();
@@ -74,7 +76,7 @@ class CreateContentsTable extends TableOperation
             $table->char('import_id', 40)->nullable();
             // $table->char('import_id', 40)->index();
 
-            $table->mediumText('route');
+            $table->mediumText('route')->nullable();
 
             // ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5
         });

@@ -1,4 +1,7 @@
 {
+    "name": "rickynroses87/installer",
+    "license": "MIT",
+    "type": "package",
     "require": {
         "illuminate/database": "^5.4",
         "symfony/yaml": "^3.2",
@@ -9,5 +12,10 @@
     		"Installer\\": "src/",
             "Database\\": "database/"
     	}
-    }
+    },
+    "config": {
+        "platform": {
+            "php": "5.5.9"
+        }
+    },
 }

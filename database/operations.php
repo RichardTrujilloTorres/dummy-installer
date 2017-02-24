@@ -43,6 +43,6 @@ return [
 	// 'populate_templates_table' => PopulateTemplatesTable::class,
 	// 'populate_users_table' => PopulateUsersTable::class,
 	// 'populate_user_groups_table' => PopulateUserGroupsTable::class,
-	'populate_widgets_table' => PopulateWidgetsTable::class,
+	// 'populate_widgets_table' => PopulateWidgetsTable::class,
 
 ];

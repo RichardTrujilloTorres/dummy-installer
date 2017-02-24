@@ -2,7 +2,7 @@
     "name": "rickynroses87/installer",
     "license": "MIT",
     "type": "package",
-    "minimum-stability": "master",
+    "minimum-stability": "stable",
     "require": {
         "illuminate/database": "^5.4",
         "symfony/yaml": "^3.2",
